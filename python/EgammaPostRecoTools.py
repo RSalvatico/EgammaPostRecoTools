@@ -434,7 +434,7 @@ def _setupEgammaVID(eleSrc,phoSrc,cfg):
 
 
 def _setupEgammaPostVIDUpdator(eleSrc,phoSrc,cfg):
-    from RecoEgamma.EgammaTools.egammaObjectModificationsInMiniAOD_cff import egamma_modifications,egamma8XLegacyEtScaleSysModifier
+    from RecoEgamma.EgammaTools.egammaObjectModificationsInMiniAOD_cff import egamma_modifications,egamma8XLegacyEtScaleSysModifier,UpdateBS2DModifier
     from RecoEgamma.EgammaTools.egammaObjectModifications_tools import makeVIDBitsModifier,makeVIDinPATIDsModifier,makeEnergyScaleAndSmearingSysModifier  
     process = cfg.process
 
@@ -466,6 +466,8 @@ def _setupEgammaPostVIDUpdator(eleSrc,phoSrc,cfg):
                     pset.electron_config.heepTrkPtIso = cms.InputTag("heepIDVarValueMaps","eleTrkPtIso")
                     break
 
+    egamma_modifications.append(UpdateBS2DModifier)
+    
     for pset in egamma_modifications:
         pset.overrideExistingValues = cms.bool(True)
         if hasattr(pset,"electron_config"): pset.electron_config.electronSrc = eleSrc
